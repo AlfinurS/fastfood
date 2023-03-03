@@ -45,53 +45,79 @@ class Humburger {
 	}
     getCal() {
         return this.calories;
+        
     }
 
 }
 
-const btn = document.querySelector("#cheese");
-const btn2 = document.querySelector("#salat");
-const btn3 = document.querySelector("#potato");
-
-const btnExtra = document.querySelector("#sauce");
-const btnExtra2 = document.querySelector("#flavoring");
-
-/* const btnSmallBurger = document.querySelector("#cheeseSmall");
-const btnSmallBurger2 = document.querySelector("#salatSmall");
-const btnSmallBurger3 = document.querySelector("#potatoSmall");
-
-const btnExtraSmall = document.querySelector("#sauceSmall");
-const btnExtraSmall2 = document.querySelector("#flavoringSmall"); */
-
 const cart = [];
-
 
 function addBigBurger(event) {
     const idStuff = event.target.id;
-    const humburgerBig = new Humburger(1 ,"big", idStuff);
+    const arrayStuff = idStuff.split("_");
+    const productArrStuff = idStuff.split("_");
+    const sizeStuff = arrayStuff[1];
+    const sproductStuff = productArrStuff[0];
+    const humburgerBig = new Humburger(1 , sizeStuff, sproductStuff);
     cart.push(humburgerBig);
+    
 }
 
 function addBigBurgerExtra(event) {
     const idExtra = event.target.id;
+    const arrayExtra = idExtra.split("_");
+    const productExtra = arrayExtra[0];
     const index = cart.findIndex(item => item.id === 1)
-    cart[index].addExtra(idExtra);
-    
-console.log(cart);
+    cart[index].addExtra(productExtra);
+    //console.log(cart[index]);
+
 }
 
 function addSmallBurger(event) {
     const idStuff = event.target.id;
-    const humburgerSmall = new Humburger(2, "small", idStuff);
+    const arrayStuff = idStuff.split("_");
+    const productArrStuff = idStuff.split("_");
+    const sizeStuff = arrayStuff[1];
+    const sproductStuff = productArrStuff[0];
+    const humburgerSmall = new Humburger(2, sizeStuff, sproductStuff);
     cart.push(humburgerSmall);
 }
 
-function addBurgerExtra(event) {
+function addSmallBurgerExtra(event) {
     const idExtra = event.target.id;
+    const arrayExtra = idExtra.split("_");
+    const productExtra = arrayExtra[0];
     const index = cart.findIndex(item => item.id === 2)
-    cart[index].addExtra(idExtra);
-    console.log(cart);
+    cart[index].addExtra(productExtra);
 }
+
+
+let sumCart = () => {
+
+    let index = cart.findIndex(item => item.price);
+    cart[index].getPrice();
+    let indexCal = cart.findIndex(item => item.calories);
+    cart[indexCal].getCal();
+    alert(`Цена бургера ${cart[index].size} ${cart[index].stuff} с добавкой ${cart[index].extra.join(', ')} составляет ${cart[index].price} рублей. Всего количество каллорий ${cart[indexCal].calories}.`)
+    //return result; 
+  };
+
+const btn = document.querySelector("#cheese_big");
+const btn2 = document.querySelector("#salat_big");
+const btn3 = document.querySelector("#potato_big");
+
+const btnExtra = document.querySelector("#sauce_big");
+const btnExtra2 = document.querySelector("#flavoring_big");
+
+const btnSmallBurger = document.querySelector("#cheese_small");
+const btnSmallBurger2 = document.querySelector("#salat_small");
+const btnSmallBurger3 = document.querySelector("#potato_small");
+
+const btnExtraSmall = document.querySelector("#sauce_small");
+const btnExtraSmall2 = document.querySelector("#flavoring_small");
+
+const buttonBig = document.querySelector("#button_big");
+const buttonSmall = document.querySelector("#button_small");
 
 btn.addEventListener("click", addBigBurger);
 btn2.addEventListener("click", addBigBurger);
@@ -99,10 +125,13 @@ btn3.addEventListener("click", addBigBurger);
 
 btnExtra.addEventListener("click", addBigBurgerExtra);
 btnExtra2.addEventListener("click", addBigBurgerExtra);
-/* 
+
 btnSmallBurger.addEventListener("click", addSmallBurger);
 btnSmallBurger2.addEventListener("click", addSmallBurger);
 btnSmallBurger3.addEventListener("click", addSmallBurger);
 
-btnExtraSmall.addEventListener("click", addBigBurgerExtra);
-btnExtraSmall2.addEventListener("click", addBigBurgerExtra); */
+btnExtraSmall.addEventListener("click", addSmallBurgerExtra);
+btnExtraSmall2.addEventListener("click", addSmallBurgerExtra);
+
+buttonBig.addEventListener("click", sumCart);
+buttonSmall.addEventListener("click", sumCart);
